@@ -14,7 +14,6 @@ using System.Runtime.InteropServices;
 using DevExpress.Diagram.Core;
 using DevExpress.XtraDiagram;
 using DevExpress.Utils;
-using System.Drawing.Drawing2D;
 using Accord.Video.FFMPEG;
 
 namespace DXScreenCapture {
@@ -308,19 +307,34 @@ namespace DXScreenCapture {
 
         private void VideoWriterTimer_Tick(object sender, EventArgs e) {
             var args = (RegionCapturedEventArgs)videoWriterTimer.Tag;
-            var bitmap = new Bitmap(RoundTo2(args.SelectedRegion.Width), RoundTo2(args.SelectedRegion.Height));
+            var rect = args.SelectedRegion;
+            var bitmap = new Bitmap(RoundTo2(rect.Width), RoundTo2(rect.Height));
             var graphics = Graphics.FromImage(bitmap);
-            graphics.CopyFromScreen(args.SelectedRegion.Left, args.SelectedRegion.Top, 0, 0, new Size(bitmap.Width, bitmap.Height));
+            graphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, new Size(bitmap.Width, bitmap.Height));
 
-            Cursors.Arrow.Draw(graphics, new Rectangle((int)(Cursor.Position.X - args.SelectedRegion.Left), (int)(Cursor.Position.Y - args.SelectedRegion.Top), Cursors.Arrow.Size.Width, Cursors.Arrow.Size.Height));
+            Cursors.Arrow.Draw(graphics, new Rectangle((int)(Cursor.Position.X - rect.Left), (int)(Cursor.Position.Y - rect.Top), Cursors.Arrow.Size.Width, Cursors.Arrow.Size.Height));
             
             videoWriter.WriteVideoFrame((Bitmap)CompressImage(bitmap, quality));
 
-            desktopGraphics.DrawRectangle(new Pen(Color.Red, 2), args.SelectedRegion);
+            WinAPI.InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
+
+            desktopGraphics.DrawRectangle(new Pen(Color.Red, 2), rect);
+
+            /*desktopGraphics.DrawLines(new Pen(Color.Red, 2), new Point[] {
+                rect.Location, 
+                new Point(rect.Left + rect.Width, rect.Top),
+                new Point(rect.Left + rect.Width, rect.Top + rect.Height),
+                new Point(rect.Left, rect.Top + rect.Height)
+            });*/
         }
 
         private void btnSave_Click(object sender, EventArgs e) {
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "screenshot.jpg");
+
+            if (File.Exists(path)) {
+                MessageBox.Show(string.Format("The '{0}' file already exists.", path), "DXScreenCapture");
+                return;
+            }
 
             var memoryStream = new MemoryStream();
             diagramControl1.ExportToImage(memoryStream,  DiagramImageExportFormat.JPEG);

@@ -68,6 +68,8 @@ namespace DXScreenCapture {
             diagramControl1.OptionsView.PageMargin = new Padding(0);
 
             notifyIcon1.ShowBalloonTip(500);
+
+            toolTip1.SetToolTip(btnSave, "Click to copy screenshot to clipboard.\r\nCTRL+Click to save screenshot file.");
         }
 
         private void rgSelectedTool_SelectedIndexChanged(object sender, EventArgs e) {
@@ -160,13 +162,15 @@ namespace DXScreenCapture {
                 Console.WriteLine((Keys)vkCode);
 
                 if ((Keys)vkCode == Keys.PrintScreen) {
-                    if ((Form.ModifierKeys & Keys.Control) == Keys.Control) {
-                        btnScreencast_Click(null, null);
+                    if (Application.OpenForms.OfType<FormSelection>().Count() == 0) {
+                        if ((Form.ModifierKeys & Keys.Control) == Keys.Control)
+                            btnScreencast_Click(null, null);
+                        else
+                            btnScreenshot_Click(null, null);
                     }
-                    else
-                        btnScreenshot_Click(null, null);
                 }
             }
+
             return WinAPI.CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 
@@ -329,13 +333,6 @@ namespace DXScreenCapture {
         }
 
         private void btnSave_Click(object sender, EventArgs e) {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "screenshot.jpg");
-
-            if (File.Exists(path)) {
-                MessageBox.Show(string.Format("The '{0}' file already exists.", path), "DXScreenCapture");
-                return;
-            }
-
             var memoryStream = new MemoryStream();
             diagramControl1.ExportToImage(memoryStream,  DiagramImageExportFormat.JPEG);
             var compressed = CompressImage(Image.FromStream(memoryStream), quality);
@@ -347,7 +344,18 @@ namespace DXScreenCapture {
 
             Clipboard.SetImage(compressed);
 
-            compressed.Save(path);
+            if ((Form.ModifierKeys & Keys.Control) == Keys.Control) {
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "screenshot.jpg");
+
+                if (File.Exists(path)) {
+                    MessageBox.Show(string.Format("The '{0}' file already exists.", path), "DXScreenCapture");
+                    compressed.Dispose();
+                    return;
+                }
+                else {
+                    compressed.Save(path);
+                }
+            }
 
             compressed.Dispose();
 

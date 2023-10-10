@@ -25,7 +25,8 @@ namespace DXScreenCapture {
         public FormSelection() {
             InitializeComponent();
 
-            //TopMost = true;
+            TopMost = true;
+            ShowInTaskbar = false;
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
             StartPosition = FormStartPosition.Manual;

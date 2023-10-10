@@ -11,6 +11,12 @@ Captures images and videos from screen.
 - Uses `DevExpress DiagramControl` to edit images.
 - Uses `Accord.Video` library to record videos.
 
+## Useful features
+
+- Minimizes size of the created files by reducing image quality.
+- Copies the screenshot directly to the clipboard.
+- Paint a frame over the screenshot.
+
 ## Example
 
 ![Image](DXScreenCapture.png)

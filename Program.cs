@@ -12,9 +12,8 @@ namespace DXScreenCapture {
         [STAThread]
         static void Main() {
             // Enable DPI awareness for your application
-            if (Environment.OSVersion.Version.Major >= 6) {
-                SetProcessDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
-            }
+            if (Environment.OSVersion.Version.Major >= 6)
+                WinAPI.SetProcessDpiAwareness(WinAPI.ProcessDPIAwareness.ProcessPerMonitorDPIAware);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -22,15 +21,6 @@ namespace DXScreenCapture {
             var form = new Form1();
 
             Application.Run();
-        }
-
-        [System.Runtime.InteropServices.DllImport("shcore.dll")]
-        private static extern int SetProcessDpiAwareness(ProcessDPIAwareness value);
-
-        public enum ProcessDPIAwareness {
-            ProcessDPIUnaware = 0,
-            ProcessSystemDPIAware = 1,
-            ProcessPerMonitorDPIAware = 2
         }
     }
 }

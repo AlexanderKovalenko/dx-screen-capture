@@ -33,6 +33,7 @@ namespace DXScreenCapture {
             this.rgSelectedTool = new DevExpress.XtraEditors.RadioGroup();
             this.btnScreenshot = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.diagramControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rgSelectedTool.Properties)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +64,7 @@ namespace DXScreenCapture {
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.diagramControl1.Location = new System.Drawing.Point(127, 12);
-            this.diagramControl1.Margin = new System.Windows.Forms.Padding(15, 15, 15, 15);
+            this.diagramControl1.Margin = new System.Windows.Forms.Padding(15);
             this.diagramControl1.Name = "diagramControl1";
             this.diagramControl1.OptionsBehavior.SelectedStencils = new DevExpress.Diagram.Core.StencilCollection(new string[] {
             "BasicShapes",
@@ -89,7 +90,7 @@ namespace DXScreenCapture {
             // 
             this.rgSelectedTool.EditValue = "Arrow";
             this.rgSelectedTool.Location = new System.Drawing.Point(12, 160);
-            this.rgSelectedTool.Margin = new System.Windows.Forms.Padding(12, 12, 12, 12);
+            this.rgSelectedTool.Margin = new System.Windows.Forms.Padding(12);
             this.rgSelectedTool.Name = "rgSelectedTool";
             this.rgSelectedTool.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
             new DevExpress.XtraEditors.Controls.RadioGroupItem("Move", "<Move>"),
@@ -146,6 +147,7 @@ namespace DXScreenCapture {
         private DevExpress.XtraEditors.RadioGroup rgSelectedTool;
         private System.Windows.Forms.Button btnScreenshot;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

@@ -43,7 +43,7 @@ namespace DXScreenCapture {
             videoWriterTimer.Interval = 50;
 
             videoWriterTimer.Tick += VideoWriterTimer_Tick;
-
+            
             this.FormClosed += Form1_FormClosed;
 
             diagramControl1.OptionsView.AllowShapeShadows = false;
@@ -67,9 +67,12 @@ namespace DXScreenCapture {
 
             diagramControl1.OptionsView.PageMargin = new Padding(0);
 
+            cbQuality.SelectedIndex = 0;
+
             notifyIcon1.ShowBalloonTip(500);
 
             toolTip1.SetToolTip(btnSave, "Click to copy screenshot to clipboard.\r\nCTRL+Click to save screenshot file.");
+            toolTip1.SetToolTip(cbQuality, "Quality of the created content (affects the resulting file size)");
         }
 
         private void rgSelectedTool_SelectedIndexChanged(object sender, EventArgs e) {
@@ -121,6 +124,22 @@ namespace DXScreenCapture {
 
                         return result;
                     }, BasicShapes.Rectangle.DefaultSize, BasicShapes.Rectangle.IsQuick);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void cbQuality_SelectedValueChanged(object sender, EventArgs e) {
+            switch (cbQuality.SelectedIndex) {
+                case 0:
+                    quality = 20;
+                    break;
+                case 1:
+                    quality = 50;
+                    break;
+                case 2:
+                    quality = 80;
                     break;
                 default:
                     break;
@@ -252,7 +271,7 @@ namespace DXScreenCapture {
         }
 
         private void btnScreencast_Click(object sender, EventArgs e) {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "screencast.mp4");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), GetFileNamePrefix() + "screencast.mp4");
 
             if (File.Exists(path)) {
                 MessageBox.Show(string.Format("The '{0}' file already exists.", path), "DXScreenCapture");
@@ -345,7 +364,7 @@ namespace DXScreenCapture {
             Clipboard.SetImage(compressed);
 
             if ((Form.ModifierKeys & Keys.Control) == Keys.Control) {
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "screenshot.jpg");
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), GetFileNamePrefix() + "screenshot.jpg");
 
                 if (File.Exists(path)) {
                     MessageBox.Show(string.Format("The '{0}' file already exists.", path), "DXScreenCapture");
@@ -408,6 +427,12 @@ namespace DXScreenCapture {
         private void Form1_Resize(object sender, EventArgs e) {
             if (WindowState == FormWindowState.Minimized)
                 this.Hide();
+        }
+
+        private string GetFileNamePrefix() {
+            var prefix = string.Format("{0:yyyy-MM-dd}_", DateTime.Today);
+
+            return prefix;
         }
     }
 }

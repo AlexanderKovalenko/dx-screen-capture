@@ -47,7 +47,7 @@
     <Reference Include="Accord.Video.FFMPEG.x64, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=AMD64">
       <HintPath>packages\Accord.Video.FFMPEG.x64.3.8.0\lib\net462\Accord.Video.FFMPEG.x64.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Sparkline.v22.1.Core, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Sparkline.v22.2.Core, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -64,51 +64,51 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="DevExpress.Drawing.v22.1, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Drawing.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Data.v22.1, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Data.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Diagram.v22.1.Core, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Diagram.v22.2.Core, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Pdf.v22.1.Core, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Pdf.v22.2.Core, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Printing.v22.1.Core, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Printing.v22.2.Core, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Data.Desktop.v22.1, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Data.Desktop.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Utils.v22.1, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Utils.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraBars.v22.1, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraBars.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraDiagram.v22.1, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.XtraDiagram.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v22.1, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraEditors.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraPrinting.v22.1, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraPrinting.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraVerticalGrid.v22.1, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraVerticalGrid.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>

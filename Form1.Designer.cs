@@ -34,8 +34,10 @@ namespace DXScreenCapture {
             this.btnScreenshot = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.cbQuality = new DevExpress.XtraEditors.ComboBoxEdit();
             ((System.ComponentModel.ISupportInitialize)(this.diagramControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rgSelectedTool.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbQuality.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -120,9 +122,25 @@ namespace DXScreenCapture {
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
             // 
+            // cbQuality
+            // 
+            this.cbQuality.Location = new System.Drawing.Point(12, 311);
+            this.cbQuality.Name = "cbQuality";
+            this.cbQuality.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cbQuality.Properties.Items.AddRange(new object[] {
+            "Low",
+            "Medium",
+            "High"});
+            this.cbQuality.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.cbQuality.Size = new System.Drawing.Size(98, 22);
+            this.cbQuality.TabIndex = 7;
+            this.cbQuality.SelectedValueChanged += new System.EventHandler(this.cbQuality_SelectedValueChanged);
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(1033, 570);
+            this.Controls.Add(this.cbQuality);
             this.Controls.Add(this.btnScreenshot);
             this.Controls.Add(this.rgSelectedTool);
             this.Controls.Add(this.btnSave);
@@ -134,6 +152,7 @@ namespace DXScreenCapture {
             this.Resize += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.diagramControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rgSelectedTool.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbQuality.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -148,6 +167,7 @@ namespace DXScreenCapture {
         private System.Windows.Forms.Button btnScreenshot;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolTip toolTip1;
+        private DevExpress.XtraEditors.ComboBoxEdit cbQuality;
     }
 }
 

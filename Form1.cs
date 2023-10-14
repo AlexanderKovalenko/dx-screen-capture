@@ -34,6 +34,7 @@ namespace DXScreenCapture {
             InitializeComponent();
 
             KeyPreview = true;
+            ShowInTaskbar = false;
 
             _proc = HookCallback;
 
@@ -245,7 +246,7 @@ namespace DXScreenCapture {
         }
 
         private void btnScreenshot_Click(object sender, EventArgs e) {
-            this.Hide();
+            Hide();
 
             using (var selectionForm = new FormSelection()) {
                 selectionForm.RegionCaptured += (s, args) => {
@@ -263,7 +264,9 @@ namespace DXScreenCapture {
 
                     diagramControl1.OptionsView.ZoomFactor = 1f;
 
-                    this.Show();
+                    Show();
+                    Activate();
+                    WindowState = FormWindowState.Normal;
                 };
 
                 selectionForm.CaptureRegion();

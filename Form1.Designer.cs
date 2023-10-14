@@ -28,7 +28,7 @@ namespace DXScreenCapture {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.diagramControl1 = new DevExpress.XtraDiagram.DiagramControl();
+            this.diagramControl1 = new CustomDiagramControl();
             this.btnSave = new System.Windows.Forms.Button();
             this.rgSelectedTool = new DevExpress.XtraEditors.RadioGroup();
             this.btnScreenshot = new System.Windows.Forms.Button();
@@ -161,7 +161,7 @@ namespace DXScreenCapture {
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private DevExpress.XtraDiagram.DiagramControl diagramControl1;
+        private CustomDiagramControl diagramControl1;
         private System.Windows.Forms.Button btnSave;
         private DevExpress.XtraEditors.RadioGroup rgSelectedTool;
         private System.Windows.Forms.Button btnScreenshot;

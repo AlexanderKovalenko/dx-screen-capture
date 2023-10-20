@@ -4,7 +4,8 @@ Captures images and videos from screen.
 ## Shortcuts
 
 - **PrtScn** - Captures an image from the selected region.
-- **CTRL+PrtScn** - Captures a video from the selected region.
+- **CTRL + PrtScn** - Captures a video from the selected region.
+- Hold **SHIFT** button to capture from the active window.
 
 ## Implementation details
 

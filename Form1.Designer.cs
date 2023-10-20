@@ -26,12 +26,9 @@ namespace DXScreenCapture {
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.diagramControl1 = new CustomDiagramControl();
+            this.diagramControl1 = new DXScreenCapture.CustomDiagramControl();
             this.btnSave = new System.Windows.Forms.Button();
             this.rgSelectedTool = new DevExpress.XtraEditors.RadioGroup();
-            this.btnScreenshot = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.cbQuality = new DevExpress.XtraEditors.ComboBoxEdit();
@@ -39,26 +36,6 @@ namespace DXScreenCapture {
             ((System.ComponentModel.ISupportInitialize)(this.rgSelectedTool.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbQuality.Properties)).BeginInit();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(98, 25);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Screen";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(12, 48);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(97, 25);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Window";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // diagramControl1
             // 
@@ -80,18 +57,18 @@ namespace DXScreenCapture {
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(12, 120);
+            this.btnSave.Location = new System.Drawing.Point(13, 12);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(97, 25);
+            this.btnSave.Size = new System.Drawing.Size(98, 25);
             this.btnSave.TabIndex = 4;
-            this.btnSave.Text = "Save/Copy";
+            this.btnSave.Text = "Copy/Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // rgSelectedTool
             // 
             this.rgSelectedTool.EditValue = "Arrow";
-            this.rgSelectedTool.Location = new System.Drawing.Point(12, 160);
+            this.rgSelectedTool.Location = new System.Drawing.Point(13, 52);
             this.rgSelectedTool.Margin = new System.Windows.Forms.Padding(12);
             this.rgSelectedTool.Name = "rgSelectedTool";
             this.rgSelectedTool.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
@@ -103,20 +80,10 @@ namespace DXScreenCapture {
             this.rgSelectedTool.TabIndex = 5;
             this.rgSelectedTool.SelectedIndexChanged += new System.EventHandler(this.rgSelectedTool_SelectedIndexChanged);
             // 
-            // btnScreenshot
-            // 
-            this.btnScreenshot.Location = new System.Drawing.Point(12, 84);
-            this.btnScreenshot.Name = "btnScreenshot";
-            this.btnScreenshot.Size = new System.Drawing.Size(97, 25);
-            this.btnScreenshot.TabIndex = 6;
-            this.btnScreenshot.Text = "Region";
-            this.btnScreenshot.UseVisualStyleBackColor = true;
-            this.btnScreenshot.Click += new System.EventHandler(this.btnScreenshot_Click);
-            // 
             // notifyIcon1
             // 
             this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.notifyIcon1.BalloonTipText = "Use PrtScn or CTRL+PrtScn buttons to capture screenshots or screencasts";
+            this.notifyIcon1.BalloonTipText = "Use PrtScn or CTRL + PrtScn buttons to capture screenshots or screencasts.\r\nHold Shift button to capture from the active window.";
             this.notifyIcon1.BalloonTipTitle = "DXScreenCapture";
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Visible = true;
@@ -124,7 +91,7 @@ namespace DXScreenCapture {
             // 
             // cbQuality
             // 
-            this.cbQuality.Location = new System.Drawing.Point(12, 311);
+            this.cbQuality.Location = new System.Drawing.Point(13, 203);
             this.cbQuality.Name = "cbQuality";
             this.cbQuality.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -141,12 +108,9 @@ namespace DXScreenCapture {
             // 
             this.ClientSize = new System.Drawing.Size(1033, 570);
             this.Controls.Add(this.cbQuality);
-            this.Controls.Add(this.btnScreenshot);
             this.Controls.Add(this.rgSelectedTool);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.diagramControl1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "DXScreenCapture";
             this.Resize += new System.EventHandler(this.Form1_Resize);
@@ -158,13 +122,9 @@ namespace DXScreenCapture {
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private CustomDiagramControl diagramControl1;
         private System.Windows.Forms.Button btnSave;
         private DevExpress.XtraEditors.RadioGroup rgSelectedTool;
-        private System.Windows.Forms.Button btnScreenshot;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolTip toolTip1;
         private DevExpress.XtraEditors.ComboBoxEdit cbQuality;

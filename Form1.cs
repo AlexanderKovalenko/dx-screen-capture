@@ -183,10 +183,17 @@ namespace DXScreenCapture {
 
                 if ((Keys)vkCode == Keys.PrintScreen) {
                     if (Application.OpenForms.OfType<FormSelection>().Count() == 0) {
-                        if ((Form.ModifierKeys & Keys.Control) == Keys.Control)
-                            btnScreencast_Click(null, null);
-                        else
-                            btnScreenshot_Click(null, null);
+                        bool ctrl = (Form.ModifierKeys & Keys.Control) == Keys.Control;
+                        bool shift = (Form.ModifierKeys & Keys.Shift) == Keys.Shift;
+
+                        if (ctrl)
+                            CaptureScreencast(!shift);
+                        else { 
+                            if (shift)
+                                CaptureActiveWindow();
+                            else
+                                CaptureRegion();
+                        }
                     }
                 }
             }
@@ -194,7 +201,7 @@ namespace DXScreenCapture {
             return WinAPI.CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 
-        private void button1_Click(object sender, EventArgs e) {
+        /*private void button1_Click(object sender, EventArgs e) {
             // Create a Bitmap to hold the captured screen
             var screenshot = new Bitmap(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
 
@@ -207,9 +214,9 @@ namespace DXScreenCapture {
             capturedImage = screenshot;
             diagramControl1.OptionsView.PageSize = screenshot.Size;
             diagramControl1.Refresh();
-        }
+        }*/
 
-        private void button2_Click(object sender, EventArgs e) {
+        private void CaptureActiveWindow() {
             // Get the handle of the active window
             IntPtr hWnd = WinAPI.GetForegroundWindow();
 
@@ -219,9 +226,10 @@ namespace DXScreenCapture {
                 MessageBox.Show("Failed to get the window dimensions.");
                 return;
             }
+            windowRect.Left += 5;
 
-            int windowWidth = windowRect.Right - windowRect.Left;
-            int windowHeight = windowRect.Bottom - windowRect.Top;
+            int windowWidth = windowRect.Right - windowRect.Left - 7;
+            int windowHeight = windowRect.Bottom - windowRect.Top - 7;
 
             // Create a Bitmap to hold the captured window
             Bitmap screenshot = new Bitmap(windowWidth, windowHeight);
@@ -243,9 +251,13 @@ namespace DXScreenCapture {
                 HorzAlignment.Center, VertAlignment.Center);
 
             diagramControl1.OptionsView.ZoomFactor = 0.8f;
+
+            Show();
+            Activate();
+            WindowState = FormWindowState.Normal;
         }
 
-        private void btnScreenshot_Click(object sender, EventArgs e) {
+        private void CaptureRegion() {
             Hide();
 
             using (var selectionForm = new FormSelection()) {
@@ -273,7 +285,7 @@ namespace DXScreenCapture {
             }
         }
 
-        private void btnScreencast_Click(object sender, EventArgs e) {
+        private void CaptureScreencast(bool useRegionSelector) {
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), GetFileNamePrefix() + "screencast.mp4");
 
             if (File.Exists(path)) {
@@ -286,45 +298,56 @@ namespace DXScreenCapture {
             desktopDC = WinAPI.GetDC(IntPtr.Zero);
             desktopGraphics  = Graphics.FromHdc(desktopDC);
 
-            using (var selectionForm = new FormSelection()) {
-                selectionForm.RegionCaptured += (s, args) => {
-                    videoWriter = new VideoFileWriter();
-                    videoWriter.Open(path, RoundTo2(args.SelectedRegion.Width), RoundTo2(args.SelectedRegion.Height), 25, VideoCodec.H264, 1000000);
-
-                    videoWriterTimer.Tag = args;
-                    videoWriterTimer.Start();
-
-                    var frmRecorder = new FormRecorder();
-
-                    frmRecorder.Location = new Point(args.SelectedRegion.Left, args.SelectedRegion.Bottom);
-
-                    frmRecorder.StopRecording += (a, b) => {
-                        videoWriterTimer.Stop();
-                        videoWriter.Close();
-
-                        desktopGraphics.Dispose();
-                        WinAPI.ReleaseDC(IntPtr.Zero, desktopDC);
-                        WinAPI.InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
-
-                        Clipboard.SetText(path);
+            if (useRegionSelector) {
+                using (var selectionForm = new FormSelection()) {
+                    selectionForm.RegionCaptured += (s, args) => {
+                        InitScreencastRecording(path, args.SelectedRegion);
                     };
 
-                    frmRecorder.CancelRecording += (a, b) => {
-                        videoWriterTimer.Stop();
-                        videoWriter.Close();
-
-                        desktopGraphics.Dispose();
-                        WinAPI.ReleaseDC(IntPtr.Zero, desktopDC);
-                        WinAPI.InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
-
-                        File.Delete(path);
-                    };
-
-                    frmRecorder.Show();
-                };
-
-                selectionForm.CaptureRegion();
+                    selectionForm.CaptureRegion();
+                }
             }
+            else {
+                IntPtr hWnd = WinAPI.GetForegroundWindow();
+                // Get the dimensions of the active window
+                WinAPI.RECT windowRect;
+                if (!WinAPI.GetWindowRect(hWnd, out windowRect)) {
+                    MessageBox.Show("Failed to get the window dimensions.");
+                    return;
+                }
+                windowRect.Left += 5;
+
+                InitScreencastRecording(path,
+                    new Rectangle(windowRect.Left, windowRect.Top,
+                    windowRect.Right - windowRect.Left - 7,
+                    windowRect.Bottom - windowRect.Top - 7));
+            }
+        }
+
+        private void InitScreencastRecording(string path, Rectangle rect) {
+            videoWriter = new VideoFileWriter();
+            videoWriter.Open(path, RoundTo2(rect.Width), RoundTo2(rect.Height), 25, VideoCodec.H264, 1000000);
+            videoWriterTimer.Tag = rect;
+            videoWriterTimer.Start();
+            var frmRecorder = new FormRecorder();
+            frmRecorder.Location = new Point(rect.Left, rect.Bottom);
+            frmRecorder.StopRecording += (a, b) => {
+                videoWriterTimer.Stop();
+                videoWriter.Close();
+                desktopGraphics.Dispose();
+                WinAPI.ReleaseDC(IntPtr.Zero, desktopDC);
+                WinAPI.InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
+                Clipboard.SetText(path);
+            };
+            frmRecorder.CancelRecording += (a, b) => {
+                videoWriterTimer.Stop();
+                videoWriter.Close();
+                desktopGraphics.Dispose();
+                WinAPI.ReleaseDC(IntPtr.Zero, desktopDC);
+                WinAPI.InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
+                File.Delete(path);
+            };
+            frmRecorder.Show();
         }
 
         private int RoundTo2(int value) {
@@ -332,8 +355,7 @@ namespace DXScreenCapture {
         }
 
         private void VideoWriterTimer_Tick(object sender, EventArgs e) {
-            var args = (RegionCapturedEventArgs)videoWriterTimer.Tag;
-            var rect = args.SelectedRegion;
+            var rect = (Rectangle)videoWriterTimer.Tag;
             var bitmap = new Bitmap(RoundTo2(rect.Width), RoundTo2(rect.Height));
             var graphics = Graphics.FromImage(bitmap);
             graphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, new Size(bitmap.Width, bitmap.Height));

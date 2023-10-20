@@ -20,4 +20,4 @@ Captures images and videos from screen.
 
 ## Example
 
-![Image](DXScreenCapture.png)
+![Image](DXScreenCapture.jpg)

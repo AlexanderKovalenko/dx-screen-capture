@@ -61,7 +61,7 @@ namespace DXScreenCapture {
                 result.Appearance.BorderColor = Color.Red;
                 result.Appearance.BorderSize = 3;
 
-                result.EndArrowSize = new SizeF(30, 30);
+                result.EndArrowSize = new SizeF(20, 20);
 
                 return result;
             });
@@ -89,7 +89,7 @@ namespace DXScreenCapture {
                         result.Appearance.BorderColor = Color.Red;
                         result.Appearance.BorderSize = 3;
 
-                        result.EndArrowSize = new SizeF(30, 30);
+                        result.EndArrowSize = new SizeF(20, 20);
 
                         return result;
                     });
@@ -101,14 +101,14 @@ namespace DXScreenCapture {
                             ConnectionPoints = new PointCollection(new List<PointFloat>() { new PointFloat(0.5F, 0.5F) }),
                         };
 
-                        result.Appearance.BackColor = Color.Blue;
-                        result.Appearance.BorderColor = Color.Red;
-                        result.Appearance.BorderSize = 3;
+                        result.Appearance.BackColor = Color.FromArgb(150, Color.Blue);
+                        result.Appearance.BorderColor = Color.FromArgb(150, Color.Red);
+                        result.Appearance.BorderSize = 2;
 
                         //result.CanSelect = false;
 
                         return result;
-                    }, BasicShapes.Rectangle.DefaultSize, BasicShapes.Rectangle.IsQuick);
+                    }, BasicShapes.Frame.DefaultSize, BasicShapes.Frame.IsQuick);
                     break;
                 case 3:
                     diagramControl1.OptionsBehavior.ActiveTool = new FactoryItemTool("CustomLabel", () => "CustomLabel", d => {
@@ -117,8 +117,8 @@ namespace DXScreenCapture {
                             ConnectionPoints = new PointCollection(new List<PointFloat>() { new PointFloat(0.5F, 0.5F) }),
                         };
 
-                        result.Appearance.BackColor = Color.Red;
-                        result.Appearance.BorderColor = Color.Blue;
+                        result.Appearance.BackColor = Color.FromArgb(200, Color.Red);
+                        result.Appearance.BorderColor = Color.FromArgb(200, Color.Blue);
                         result.Appearance.BorderSize = 2;
                         result.Appearance.ForeColor = Color.Black;
                         result.Appearance.Font = new Font("Consolas", 20, FontStyle.Regular);

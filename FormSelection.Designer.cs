@@ -33,6 +33,7 @@
             this.Name = "FormSelection";
             this.Text = "FormSelection";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormSelection_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormSelection_KeyDown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormSelection_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormSelection_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormSelection_MouseUp);

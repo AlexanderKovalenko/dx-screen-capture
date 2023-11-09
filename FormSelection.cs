@@ -83,6 +83,11 @@ namespace DXScreenCapture {
             Close();
         }
 
+        private void FormSelection_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Escape)
+                Close();
+        }
+
         private void FormSelection_Paint(object sender, PaintEventArgs e) {
             // Draw the screenshot on the form
             e.Graphics.DrawImage(entireScreen, Point.Empty);

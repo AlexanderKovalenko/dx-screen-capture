@@ -54,21 +54,25 @@ namespace DXScreenCapture {
             diagramControl1.OptionsBehavior.SnapToItems = false;
             diagramControl1.OptionsBehavior.ScrollMode = DiagramScrollMode.Content;
 
-            diagramControl1.OptionsBehavior.ActiveTool = new FactoryConnectorTool("CustomArrow", () => "CustomArrow", d => {
-                var result = new DiagramConnector() { Type = ConnectorType.Straight, BeginArrow = null, EndArrow = ArrowDescriptions.IndentedFilledArrow };
+            /*diagramControl1.OptionsBehavior.ActiveTool = new FactoryItemTool("CustomRect", () => "CustomRect", d => {
+                var result = new DiagramShape() {
+                    Shape = BasicShapes.Frame,
+                    ConnectionPoints = new PointCollection(new List<PointFloat>() { new PointFloat(0.5F, 0.5F) }),
+                };
 
-                result.Appearance.ContentBackground = Color.Red;
-                result.Appearance.BorderColor = Color.Red;
-                result.Appearance.BorderSize = 3;
+                result.Appearance.BackColor = Color.FromArgb(150, Color.Blue);
+                result.Appearance.BorderColor = Color.FromArgb(150, Color.Red);
+                result.Appearance.BorderSize = 2;
 
-                result.EndArrowSize = new SizeF(20, 20);
+                //result.CanSelect = false;
 
                 return result;
-            });
+            }, BasicShapes.Frame.DefaultSize, BasicShapes.Frame.IsQuick);*/
 
             diagramControl1.OptionsView.PageMargin = new Padding(0);
 
-            cbQuality.SelectedIndex = 0;
+            cbQuality.SelectedIndex = 0; // Low
+            rgSelectedTool.SelectedIndex = 2; // Rect
 
             notifyIcon1.ShowBalloonTip(500);
 

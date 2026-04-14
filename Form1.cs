@@ -41,7 +41,7 @@ namespace DXScreenCapture {
             _hookID = SetHook(_proc);
 
             videoWriterTimer = new System.Windows.Forms.Timer();
-            videoWriterTimer.Interval = 50;
+            videoWriterTimer.Interval = 30;
 
             videoWriterTimer.Tick += VideoWriterTimer_Tick;
             
@@ -359,6 +359,8 @@ namespace DXScreenCapture {
         }
 
         private void VideoWriterTimer_Tick(object sender, EventArgs e) {
+            Application.DoEvents();
+
             var rect = (Rectangle)videoWriterTimer.Tag;
             var bitmap = new Bitmap(RoundTo2(rect.Width), RoundTo2(rect.Height));
             var graphics = Graphics.FromImage(bitmap);

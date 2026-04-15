@@ -1,20 +1,20 @@
-﻿using System.Threading;
-using System.Diagnostics;
-using System.IO;
-using System;
-using System.Data;
-using System.Linq;
-using System.Drawing;
-using System.Windows.Forms;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
+﻿using Accord.Video.FFMPEG;
 using DevExpress.Diagram.Core;
-using DevExpress.XtraDiagram;
 using DevExpress.Utils;
-using Accord.Video.FFMPEG;
+using DevExpress.XtraDiagram;
+using DevExpress.XtraEditors.AI.Native;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace DXScreenCapture {
     public partial class Form1 : Form {
@@ -41,7 +41,7 @@ namespace DXScreenCapture {
             _hookID = SetHook(_proc);
 
             videoWriterTimer = new System.Windows.Forms.Timer();
-            videoWriterTimer.Interval = 30;
+            videoWriterTimer.Interval = 20;
 
             videoWriterTimer.Tick += VideoWriterTimer_Tick;
             
@@ -300,7 +300,7 @@ namespace DXScreenCapture {
             this.Hide();
 
             desktopDC = WinAPI.GetDC(IntPtr.Zero);
-            desktopGraphics  = Graphics.FromHdc(desktopDC);
+            desktopGraphics = Graphics.FromHdc(desktopDC);
 
             if (useRegionSelector) {
                 using (var selectionForm = new FormSelection()) {
@@ -333,9 +333,17 @@ namespace DXScreenCapture {
             videoWriter.Open(path, RoundTo2(rect.Width), RoundTo2(rect.Height), 25, VideoCodec.H264, 1000000);
             videoWriterTimer.Tag = rect;
             videoWriterTimer.Start();
+            
             var frmRecorder = new FormRecorder();
             frmRecorder.Location = new Point(rect.Left, rect.Bottom);
+
+            var frmOverlay = new FormOverlay();
+            frmOverlay.Bounds = rect;
+
+            frmOverlay.Show();
+
             frmRecorder.StopRecording += (a, b) => {
+                frmOverlay.Close();
                 videoWriterTimer.Stop();
                 videoWriter.Close();
                 desktopGraphics.Dispose();
@@ -344,6 +352,7 @@ namespace DXScreenCapture {
                 Clipboard.SetText(path);
             };
             frmRecorder.CancelRecording += (a, b) => {
+                frmOverlay.Close();
                 videoWriterTimer.Stop();
                 videoWriter.Close();
                 desktopGraphics.Dispose();
@@ -364,15 +373,19 @@ namespace DXScreenCapture {
             var rect = (Rectangle)videoWriterTimer.Tag;
             var bitmap = new Bitmap(RoundTo2(rect.Width), RoundTo2(rect.Height));
             var graphics = Graphics.FromImage(bitmap);
+
+            //WinAPI.DwmFlush();
+            //WinAPI.RedrawWindow(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero,
+            //    WinAPI.RDW_INVALIDATE | WinAPI.RDW_ALLCHILDREN | WinAPI.RDW_UPDATENOW);
+
             graphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, new Size(bitmap.Width, bitmap.Height));
 
             Cursors.Arrow.Draw(graphics, new Rectangle((int)(Cursor.Position.X - rect.Left), (int)(Cursor.Position.Y - rect.Top), Cursors.Arrow.Size.Width, Cursors.Arrow.Size.Height));
             
             videoWriter.WriteVideoFrame((Bitmap)CompressImage(bitmap, quality));
 
-            WinAPI.InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
-
-            desktopGraphics.DrawRectangle(new Pen(Color.Red, 2), rect);
+            //WinAPI.InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
+            //desktopGraphics.DrawRectangle(new Pen(Color.Red, 2), rect);
 
             /*desktopGraphics.DrawLines(new Pen(Color.Red, 2), new Point[] {
                 rect.Location, 

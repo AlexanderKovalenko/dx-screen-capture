@@ -54,6 +54,23 @@ namespace DXScreenCapture {
         [DllImport("user32.dll")]
         public static extern bool InvalidateRect(IntPtr hWnd, IntPtr lpRect, bool bErase);
 
+        public const uint RDW_INVALIDATE = 0x0001;
+        public const uint RDW_ALLCHILDREN = 0x0080;
+        public const uint RDW_UPDATENOW = 0x0100;
+
+        [DllImport("user32.dll")]
+        public static extern bool RedrawWindow(IntPtr hWnd, IntPtr lprcUpdate, IntPtr hrgnUpdate, uint flags);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmFlush();
+
+        public const uint WDA_NONE = 0x0;
+        public const uint WDA_MONITOR = 0x1;
+        public const uint WDA_EXCLUDEFROMCAPTURE = 0x11;
+
+        [DllImport("user32.dll")]
+        public static extern bool SetWindowDisplayAffinity(IntPtr hWnd, uint dwAffinity);
+
         public delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         [System.Runtime.InteropServices.DllImport("shcore.dll")]

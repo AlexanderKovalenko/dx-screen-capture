@@ -381,8 +381,13 @@ namespace DXScreenCapture {
             graphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, new Size(bitmap.Width, bitmap.Height));
 
             Cursors.Arrow.Draw(graphics, new Rectangle((int)(Cursor.Position.X - rect.Left), (int)(Cursor.Position.Y - rect.Top), Cursors.Arrow.Size.Width, Cursors.Arrow.Size.Height));
-            
-            videoWriter.WriteVideoFrame((Bitmap)CompressImage(bitmap, quality));
+
+            try {
+                videoWriter.WriteVideoFrame((Bitmap)CompressImage(bitmap, quality));
+            } catch (Exception ex) {
+                //MessageBox.Show(ex.Message + " in VideoWriterTimer_Tick");
+                Debug.WriteLine(ex.Message + " in VideoWriterTimer_Tick");
+            }
 
             //WinAPI.InvalidateRect(IntPtr.Zero, IntPtr.Zero, true);
             //desktopGraphics.DrawRectangle(new Pen(Color.Red, 2), rect);
